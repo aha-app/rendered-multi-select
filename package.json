@@ -2,7 +2,7 @@
   "name": "@aha-app/rendered-multi-select",
   "version": "1.1.5",
   "description": "Javascript control for selecting multiple elements (like tags) that can be rendered server-side.",
-  "main": "vendor/assets/javascripts/rendered-multi-select.coffee",
+  "main": "vendor/assets/javascripts/rendered-multi-select.js",
   "directories": {
     "example": "examples"
   },
