@@ -1,6 +1,5 @@
 /*
  * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
  * DS102: Remove unnecessary code created because of implicit returns
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
@@ -24,7 +23,7 @@ class RenderedMultiSelect {
     this.configureMultiple();
     this.blurTimeout = null;
   }
-    
+
   registerElementEvents() {
     this.element.on("keydown", ".editable-input", event => {
       return this.inputKeyDown(event);
@@ -68,7 +67,7 @@ class RenderedMultiSelect {
         if (this.input[0]) { return this.input[0].focus(); }
       }
   });
-      
+
     return this.element.on("change", event => {
       return this.configureMultiple();
     });
@@ -92,10 +91,10 @@ class RenderedMultiSelect {
       return false;
     });
   }
-      
+
   configureMultiple() {
       // For non-multiple item controls hide input if an item exists.
-      if (!this.multiple) { 
+      if (!this.multiple) {
         if (this.element.find(".rendered-multi-select-element").length > 0) {
           return this.inputContainer.hide();
         } else {
@@ -103,7 +102,7 @@ class RenderedMultiSelect {
         }
       }
     }
-  
+
   createResultMenu() {
     this.resultMenu = $("<div class='rendered-multi-select-menu'><ul class='rendered-multi-select-results'></ul></div");
 
@@ -125,7 +124,7 @@ class RenderedMultiSelect {
     const inputTop  = this.inputContainer.offset().top;
     const elemLeft  = this.element.offset().left;
     const scrollTop = this.body.scrollTop();
-    const rules     = { 
+    const rules     = {
       display: 'block',
       left:    elemLeft - this.body.scrollLeft(),
       width:   this.element.width()
@@ -148,7 +147,7 @@ class RenderedMultiSelect {
     if (this.element.attr("data-fixed-menu") === "true") { this.body.css({overflow: 'auto'}); }
     return this.resultMenu[fade ? 'fadeOut' : 'hide']();
   }
-    
+
   inputKeyDown(event) {
     let index, result;
     switch (event.keyCode) {
@@ -183,17 +182,17 @@ class RenderedMultiSelect {
     event.stopPropagation();
     return event.preventDefault();
   }
-  
+
   escapeAttr(v) {
     if (v != null) { return v.replace(/'/g, '&apos;').replace(/"/g, '&quot;'); }
   }
-  
+
   clearInput() {
     this.lastName = null;
     this.input.text("");
     return this.hideResultMenu();
   }
-    
+
   createNewItem(name) {
     name = $.trim(name);
     if (name.length === 0) { return; }
@@ -205,7 +204,7 @@ class RenderedMultiSelect {
     this.clearInput();
     return this.updateQuery();
   }
-  
+
   deleteLastItem() {
     const lastItem = this.element.find(".rendered-multi-select-element").last();
     if (lastItem.length === 0) { return; }
@@ -213,7 +212,7 @@ class RenderedMultiSelect {
     this.lastName = null;
     return this.updateQuery();
   }
-    
+
   deleteItem(item) {
     item.remove();
     if (this.options.onDeleteItem) {
@@ -221,7 +220,7 @@ class RenderedMultiSelect {
     }
     return this.element.trigger("change");
   }
-   
+
   updateQuery() {
     const q = $.trim(this.input.text());
     if (this.lastName === q) { return; }
@@ -232,7 +231,7 @@ class RenderedMultiSelect {
       });
     }
   }
-  
+
   showQueryResults(results) {
     let resultAdded;
     if (this.resultList.parents('body').length === 0) {
@@ -242,7 +241,7 @@ class RenderedMultiSelect {
 
     this.resultList.empty();
     this.resultData = {};
-    
+
     if ((results.length > 0) && results[0].parent) {
       const groupedResults = this.groupResults(results);
       for (let parent in groupedResults) {
@@ -252,7 +251,7 @@ class RenderedMultiSelect {
           resultAdded = this.appendResults(results, "has-parent");
         }
       }
-    } else {    
+    } else {
       resultAdded = this.appendResults(results, "");
     }
 
@@ -263,10 +262,10 @@ class RenderedMultiSelect {
       return this.hideResultMenu();
     }
   }
-    
+
   groupResults(results) {
     const groupedResults = {};
-    for (let result of Array.from(results)) {
+    for (let result of results) {
       if (!groupedResults[result.parent]) { groupedResults[result.parent] = []; }
       groupedResults[result.parent].push(result);
     }
@@ -300,7 +299,7 @@ class RenderedMultiSelect {
       if ((newExistingNames.length > 0) || (existingIds.length > 0)) {
         name = name.replace(/^(&nbsp;)+/, "");
       }
-      
+
       const cleanName = _.escape($(`<div>${name}</div>`).text());
 
       this.resultData[result.id] = name;
@@ -327,7 +326,7 @@ class RenderedMultiSelect {
     this.clearInput();
     return this.updateQuery();
   }
-  
+
   selectNextResult(offset) {
     const items = this.resultList.find("li");
     let currentIndex = items.index(items.filter(".selected"));
@@ -341,7 +340,7 @@ class RenderedMultiSelect {
       return $(items[currentIndex]).addClass("selected");
     }
   }
-    
+
   addItemRow(name, id) {
     let style;
     if (this.options.onStyleItem) {
@@ -352,14 +351,14 @@ class RenderedMultiSelect {
     const row = $(`<li class='rendered-multi-select-element' data-id='${this.escapeAttr(id)}' style='${style}'></li>`);
     row.html(name);
     row.append("<b>&times;</b>");
-    this.inputContainer.before(row);  
+    this.inputContainer.before(row);
     return this.element.trigger("change");
   }
-    
+
   itemExists(name) {
     return $.inArray(name, this.existingNames()) !== -1;
   }
-  
+
   existingNames() {
     return this.element.find(".rendered-multi-select-element")
       .map((index, element) => $(element).text().slice(0,-1)).get();
@@ -369,13 +368,13 @@ class RenderedMultiSelect {
     return this.element.find(".rendered-multi-select-element[data-id=undefined]")
       .map((index, element) => $(element).text().slice(0,-1)).get();
   }
-      
+
   existingIds() {
     return this.element.find(".rendered-multi-select-element")
       .map((index, element) => $(element).attr("data-id")).get();
   }
 }
-      
+
 $.fn.renderedMultiSelect = function(options, ...args) {
   return this.each(function() {
     const $this = $(this);
