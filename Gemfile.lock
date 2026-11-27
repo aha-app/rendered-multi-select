@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     rendered-multi-select (2.0.1)
-      rails
+      rails (>= 8.0)
 
 GEM
   remote: https://rubygems.org/
@@ -208,8 +208,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  nokogiri (~> 1.19)
-  rails (~> 8.1)
   rendered-multi-select!
 
 BUNDLED WITH
