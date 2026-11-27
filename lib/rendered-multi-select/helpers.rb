@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RenderedMultiSelect
   module RenderedMultiSelectHelpers
     
@@ -23,7 +25,7 @@ module RenderedMultiSelect
       element_tag = options[:element_tag] || :li
       
       content_tag(container_tag, tag_options) do
-        s = ""
+        s = +""
         elements.each do |element|
           text, value = option_text_and_value(element).map { |item| item.to_s }
           if block_given?
